@@ -7,27 +7,44 @@
     <title>Anniinan portfolio</title>
     <link href="config.yml" type="text/yaml" rel="cms-config-url" />
     <script>
-        console.log('Admin Page [HEAD]: Diagnostics initialized');
+        console.log('Admin Page [HEAD]: Level 2 Diagnostics initialized');
+
+        // 1. Monitor Messages
         window.addEventListener("message", (event) => {
             console.log('Admin Page [MSG]: Received from', event.origin);
-            console.log('Admin Page [MSG]: Data:', event.data);
             if (typeof event.data === 'string' && event.data.startsWith('authorization:')) {
-                console.log('Admin Page [MSG]: OAuth success message detected!');
+                console.log('Admin Page [MSG]: OAuth message raw:', event.data);
             }
         }, false);
+
+        // 2. Monitor Network (Fetch & XHR)
+        const originalFetch = window.fetch;
+        window.fetch = function () {
+            console.log('Admin Page [NETWORK]: Fetch called for:', arguments[0]);
+            return originalFetch.apply(this, arguments);
+        };
+
+        const originalOpen = XMLHttpRequest.prototype.open;
+        XMLHttpRequest.prototype.open = function (method, url) {
+            console.log('Admin Page [NETWORK]: XHR called for:', url);
+            return originalOpen.apply(this, arguments);
+        };
+
+        // 3. Monitor Errors
+        window.addEventListener('error', (e) => console.error('Admin Page [ERROR]:', e.error || e.message));
+        window.addEventListener('unhandledrejection', (e) => console.error('Admin Page [REJECT]:', e.reason));
     </script>
 </head>
 
 <body>
     <script>
         console.log('Admin Page [BODY]: Hash is', window.location.hash || '(empty)');
-        // Log local storage state for Decap CMS
         try {
             const user = localStorage.getItem('decap-cms-user');
-            console.log('Admin Page [STORAGE]: decaps-cms-user:', user ? 'Logged in' : 'Not found');
+            console.log('Admin Page [STORAGE]: decaps-cms-user:', user ? 'Persistent session found' : 'No session');
         } catch (e) { }
     </script>
-    <script src="https://unpkg.com/decap-cms@^3.10.0/dist/decap-cms.js"></script>
+    <script src="https://unpkg.com/decap-cms@3.3.3/dist/decap-cms.js"></script>
 </body>
 
 </html>
