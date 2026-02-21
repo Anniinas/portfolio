@@ -7,46 +7,35 @@
     <title>Anniinan portfolio</title>
     <link href="config.yml" type="text/yaml" rel="cms-config-url" />
     <script>
-        console.log('Admin Page [DIAG]: Deep State Diagnostics v3 initialized');
-
-        // 1. Message Interceptor
+        // Emergency Fallback: If Decap CMS doesn't react to the message, we can help it
         window.addEventListener("message", (event) => {
-            const isOAuth = typeof event.data === 'string' && event.data.startsWith('authorization:');
-            console.log('Admin Page [MSG]: Origin:', event.origin, '| OAuth Message:', isOAuth);
-            if (isOAuth) {
-                console.log('Admin Page [MSG]: DATA RECEIVED (Length:', event.data.length, ')');
+            if (typeof event.data === 'string' && event.data.startsWith('authorization:github:success:')) {
+                console.log('Admin: OAuth message received. If the page doesn\'t refresh in 3 seconds, logging in manually...');
+
+                const jsonStr = event.data.replace('authorization:github:success:', '');
+                try {
+                    const data = JSON.parse(jsonStr);
+                    // This is the fallback: it forces the session into localStorage if CMS fails
+                    setTimeout(() => {
+                        if (!localStorage.getItem('decap-cms-user')) {
+                            console.log('Admin: Manual session injection triggered.');
+                            localStorage.setItem('decap-cms-user', JSON.stringify({
+                                name: 'Anniinas',
+                                token: data.token,
+                                provider: 'github'
+                            }));
+                            window.location.reload();
+                        }
+                    }, 3000);
+                } catch (e) {
+                    console.error('Admin: Failed to parse OAuth data', e);
+                }
             }
         }, false);
-
-        // 2. Fetch Interceptor (Network Spy)
-        const originalFetch = window.fetch;
-        window.fetch = async (...args) => {
-            const url = args[0] instanceof URL ? args[0].href : args[0];
-            console.log('Admin Page [FETCH]:', url);
-            try {
-                const response = await originalFetch(...args);
-                console.log('Admin Page [FETCH-RES]:', url, 'Status:', response.status);
-                return response;
-            } catch (err) {
-                console.error('Admin Page [FETCH-ERR]:', url, err.message);
-                throw err;
-            }
-        };
-
-        // 3. Global State Monitor
-        setInterval(() => {
-            const state = localStorage.getItem('decap-cms-user');
-            if (state) {
-                console.log('Admin Page [STATE]: Session DETECTED in localStorage!');
-            }
-        }, 5000);
     </script>
 </head>
 
 <body>
-    <script>
-        console.log('Admin Page [INIT]: Page loaded at', new Date().toLocaleTimeString());
-    </script>
     <script src="https://unpkg.com/decap-cms@^3.10.0/dist/decap-cms.js"></script>
 </body>
 
