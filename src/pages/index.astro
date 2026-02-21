@@ -25,7 +25,7 @@ const latestPosts = (await getCollection('blog'))
 		<div class="blog-preview-grid">
 			{latestPosts.map((post) => (
 				<article class="blog-preview-card">
-					<a href={`/blog/${post.slug}`}>
+					<a href={`/blog/${post.id}`}>
 						<h3>{post.data.title}</h3>
 						<time datetime={post.data.date.toISOString()}>
 							{post.data.date.toLocaleDateString('fi-FI', {
