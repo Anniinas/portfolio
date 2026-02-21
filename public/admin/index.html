@@ -6,9 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Anniinan portfolio</title>
     <link href="config.yml" type="text/yaml" rel="cms-config-url" />
+    <script>
+        console.log('Admin Page [HEAD]: Diagnostics initialized');
+        window.addEventListener("message", (event) => {
+            console.log('Admin Page [MSG]: Received from', event.origin);
+            console.log('Admin Page [MSG]: Data:', event.data);
+            if (typeof event.data === 'string' && event.data.startsWith('authorization:')) {
+                console.log('Admin Page [MSG]: OAuth success message detected!');
+            }
+        }, false);
+    </script>
 </head>
 
 <body>
+    <script>
+        console.log('Admin Page [BODY]: Hash is', window.location.hash || '(empty)');
+        // Log local storage state for Decap CMS
+        try {
+            const user = localStorage.getItem('decap-cms-user');
+            console.log('Admin Page [STORAGE]: decaps-cms-user:', user ? 'Logged in' : 'Not found');
+        } catch (e) { }
+    </script>
     <script src="https://unpkg.com/decap-cms@^3.10.0/dist/decap-cms.js"></script>
 </body>
 
