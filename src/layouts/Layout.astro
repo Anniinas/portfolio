@@ -1,23 +1,141 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="fi">
 	<head>
 		<meta charset="UTF-8" />
+		<meta name="description" content="Valokuvausportfolio ja blogi" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
 	</head>
 	<body>
-		<slot />
+		<header>
+			<nav>
+				<div class="logo">
+					<a href="/">Portfolio</a>
+				</div>
+				<ul>
+					<li><a href="/gallery">Galleria</a></li>
+					<li><a href="/blog">Blogi</a></li>
+					<li><a href="/admin" class="admin-link">Hallinta</a></li>
+				</ul>
+			</nav>
+		</header>
+		<main>
+			<slot />
+		</main>
+		<footer>
+			<p>&copy; {new Date().getFullYear()} Valokuvaaja. Kaikki oikeudet pidätetään.</p>
+		</footer>
 	</body>
 </html>
 
-<style>
-	html,
+<style is:global>
+	:root {
+		--bg-color: #0d0d0d;
+		--text-color: #f2f2f2;
+		--accent-color: #0070f3;
+		--secondary-color: #1a1a1a;
+		--muted-color: #888;
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
+	html {
+		font-family: 'Inter', system-ui, sans-serif;
+		background: var(--bg-color);
+		color: var(--text-color);
+	}
+
 	body {
 		margin: 0;
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+	}
+
+	h1, h2, h3, h4 {
+		font-family: 'Outfit', sans-serif;
+	}
+
+	a {
+		color: inherit;
+		text-decoration: none;
+		transition: opacity 0.2s ease;
+	}
+
+	a:hover {
+		opacity: 0.8;
+	}
+
+	header {
+		padding: 2rem 1rem;
+		border-bottom: 1px solid var(--secondary-color);
+	}
+
+	nav {
+		max-width: 1000px;
+		margin: 0 auto;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.logo a {
+		font-size: 1.5rem;
+		font-weight: 700;
+		font-family: 'Outfit', sans-serif;
+	}
+
+	nav ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		gap: 2rem;
+	}
+
+	.admin-link {
+		color: var(--muted-color);
+		font-size: 0.8rem;
+	}
+
+	main {
+		flex: 1;
 		width: 100%;
-		height: 100%;
+		max-width: 1000px;
+		margin: 0 auto;
+		padding: 2rem 1rem;
+	}
+
+	footer {
+		padding: 2rem 1rem;
+		text-align: center;
+		border-top: 1px solid var(--secondary-color);
+		color: var(--muted-color);
+		font-size: 0.9rem;
+	}
+
+	/* Micro-animations */
+	.gallery-item {
+		transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.gallery-item:hover {
+		transform: scale(1.02);
 	}
 </style>

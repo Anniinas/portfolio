@@ -1,0 +1,100 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Layout title="Blogi | Valokuvausportfolio">
+	<h1>Blogi</h1>
+	<p class="subtitle">Tarinoita ja ajatuksia valokuvauksen maailmasta.</p>
+	
+	<div class="posts-grid">
+		{posts.map((post) => (
+			<article class="post-card">
+				<a href={`/blog/${post.slug}`}>
+					{post.data.image && (
+						<div class="image-container">
+							<img src={post.data.image} alt={post.data.alt || post.data.title} loading="lazy" />
+						</div>
+					)}
+					<div class="post-content">
+						<time datetime={post.data.date.toISOString()}>
+							{post.data.date.toLocaleDateString('fi-FI', {
+								year: 'numeric',
+								month: 'long',
+								day: 'numeric',
+							})}
+						</time>
+						<h2>{post.data.title}</h2>
+						{post.data.description && <p>{post.data.description}</p>}
+					</div>
+				</a>
+			</article>
+		))}
+	</div>
+</Layout>
+
+<style>
+	h1 {
+		font-size: 3rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.subtitle {
+		color: var(--muted-color);
+		margin-bottom: 3rem;
+	}
+
+	.posts-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: 2rem;
+	}
+
+	.post-card {
+		background: var(--secondary-color);
+		border-radius: 8px;
+		overflow: hidden;
+		transition: transform 0.2s ease;
+	}
+
+	.post-card:hover {
+		transform: translateY(-5px);
+	}
+
+	.image-container {
+		aspect-ratio: 16 / 9;
+		overflow: hidden;
+	}
+
+	.image-container img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.post-content {
+		padding: 1.5rem;
+	}
+
+	time {
+		font-size: 0.8rem;
+		color: var(--muted-color);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	h2 {
+		margin: 0.5rem 0;
+		font-size: 1.5rem;
+	}
+
+	p {
+		color: var(--muted-color);
+		font-size: 0.95rem;
+		line-height: 1.5;
+	}
+</style>

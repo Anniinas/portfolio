@@ -1,3 +1,5 @@
+# local_backend: true # Poista kommentti tästä jos haluat testata hallintaa ilman GitHub-kirjautumista lokaalisti
+
 backend:
   name: github
   repo: anniinas/portfolio
@@ -5,7 +7,10 @@ backend:
   base_url: https://decap-oauth-portfolio-gh.anniina-sipria.workers.dev
   auth_endpoint: auth
 
-media_folder: "public/images/uploads" # Kuvien sijainti
+site_url: https://anniina-photo.pages.dev
+display_url: https://anniina-photo.pages.dev
+
+media_folder: "public/images/uploads" # Kuvien sijainti GitHubissa (suhteessa git-juureen)
 public_folder: "/images/uploads"
 
 collections:

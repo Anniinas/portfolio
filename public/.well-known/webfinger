@@ -1,0 +1,15 @@
+{
+    "subject": "acct:nimi@domain.fi",
+    "links": [
+        {
+            "rel": "http://webfinger.net/rel/profile-page",
+            "type": "text/html",
+            "href": "https://mastodon.social/@anniina_sipria"
+        },
+        {
+            "rel": "self",
+            "type": "application/activity+json",
+            "href": "https://mastodon.social/users/anniina_sipria"
+        }
+    ]
+}
