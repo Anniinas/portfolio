@@ -1,0 +1,178 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Yhteystiedot | Valokuvaaja">
+	<section class="contact-container">
+		<h1>Ota yhteyttä</h1>
+		<p class="intro">
+			Haluatko tilata kuvauksen kilpailuihin tai näyttelyyn? Tai onko sinulla muuta kysyttävää? 
+			Laita viestiä, niin palailen mahdollisimman pian!
+		</p>
+
+		<div class="contact-grid">
+			<div class="contact-form">
+				<form action="https://api.web3forms.com/submit" method="POST">
+					<input type="hidden" name="access_key" value="abb5142a-ebae-42ff-9912-ae2374230f1b" />
+					<div class="form-group">
+						<label for="name">Nimi</label>
+						<input type="text" id="name" name="name" required placeholder="Nimesi" />
+					</div>
+					<div class="form-group">
+						<label for="email">Sähköposti</label>
+						<input type="email" id="email" name="email" required placeholder="anniina@sipria.fi" />
+					</div>
+					<div class="form-group">
+						<label for="subject">Aihe</label>
+						<select id="subject" name="subject">
+							<option value="kuvaustilaus">Kuvaustilaus</option>
+							<option value="palaute">Palaute</option>
+							<option value="muu">Muu asia</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="message">Viesti</label>
+						<textarea id="message" name="message" rows="5" required placeholder="Kirjoita viestisi tähän..."></textarea>
+					</div>
+					<button type="submit" class="submit-button">Lähetä viesti</button>
+				</form>
+			</div>
+
+			<div class="contact-info">
+				<h3>Yhteystiedot</h3>
+				<div class="info-item">
+					<strong>Sähköposti:</strong>
+					<span>anniina@sipria.fi</span>
+				</div>
+				<div class="info-item">
+					<strong>Sijainti:</strong>
+					<span>Helsinki / Uusimaa sopimuksen mukaan</span>
+				</div>
+				<div class="social-links">
+					<h3>Seuraa somessa</h3>
+					<div class="links">
+						<a href="#" target="_blank">Instagram</a>
+						<a href="#" target="_blank">Facebook</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<style>
+	.contact-container {
+		padding: 3rem 0;
+	}
+
+	h1 {
+		font-size: 3rem;
+		margin-bottom: 1rem;
+	}
+
+	.intro {
+		color: var(--muted-color);
+		max-width: 600px;
+		margin-bottom: 4rem;
+		font-size: 1.1rem;
+		line-height: 1.6;
+	}
+
+	.contact-grid {
+		display: grid;
+		grid-template-columns: 1fr 300px;
+		gap: 4rem;
+	}
+
+	@media (max-width: 768px) {
+		.contact-grid {
+			grid-template-columns: 1fr;
+			gap: 3rem;
+		}
+	}
+
+	.contact-form {
+		background: var(--secondary-color);
+		padding: 2.5rem;
+		border-radius: 12px;
+	}
+
+	.form-group {
+		margin-bottom: 1.5rem;
+	}
+
+	label {
+		display: block;
+		margin-bottom: 0.5rem;
+		font-weight: 700;
+		font-size: 0.9rem;
+	}
+
+	input, select, textarea {
+		width: 100%;
+		padding: 0.8rem 1rem;
+		background: #000;
+		border: 1px solid #333;
+		border-radius: 6px;
+		color: var(--text-color);
+		font-family: inherit;
+		font-size: 1rem;
+	}
+
+	input:focus, select:focus, textarea:focus {
+		outline: none;
+		border-color: var(--accent-color);
+	}
+
+	.submit-button {
+		display: inline-block;
+		background: var(--text-color);
+		color: var(--bg-color);
+		padding: 1rem 2rem;
+		border: none;
+		border-radius: 50px;
+		font-weight: 700;
+		cursor: pointer;
+		transition: transform 0.2s ease, opacity 0.2s ease;
+		width: 100%;
+	}
+
+	.submit-button:hover {
+		transform: translateY(-2px);
+		opacity: 0.9;
+	}
+
+	.contact-info h3 {
+		margin-top: 0;
+		margin-bottom: 1.5rem;
+		font-size: 1.5rem;
+	}
+
+	.info-item {
+		margin-bottom: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+	}
+
+	.info-item strong {
+		font-size: 0.8rem;
+		text-transform: uppercase;
+		color: var(--muted-color);
+		letter-spacing: 0.05em;
+	}
+
+	.social-links {
+		margin-top: 3rem;
+	}
+
+	.links {
+		display: flex;
+		gap: 1rem;
+	}
+
+	.links a {
+		color: var(--accent-color);
+		font-weight: 700;
+	}
+</style>

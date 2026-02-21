@@ -24,11 +24,13 @@ const { title } = Astro.props;
 		<header>
 			<nav>
 				<div class="logo">
-					<a href="/">Portfolio</a>
+					<a href="/">Anniina Photo</a>
 				</div>
 				<ul>
 					<li><a href="/gallery">Galleria</a></li>
+					<li><a href="/calendar">Kalenteri</a></li>
 					<li><a href="/blog">Blogi</a></li>
+					<li><a href="/contact">Yhteystiedot</a></li>
 					<li><a href="/admin" class="admin-link">Hallinta</a></li>
 				</ul>
 			</nav>
@@ -37,7 +39,7 @@ const { title } = Astro.props;
 			<slot />
 		</main>
 		<footer>
-			<p>&copy; {new Date().getFullYear()} Valokuvaaja. Kaikki oikeudet pidätetään.</p>
+			<p>&copy; {new Date().getFullYear()} Anniina Photo - anniina@sipria.fi</p>
 		</footer>
 	</body>
 </html>
