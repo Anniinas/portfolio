@@ -2,7 +2,7 @@
 
 backend:
   name: github
-  repo: anniinas/portfolio
+  repo: Anniinas/portfolio
   branch: main
   base_url: https://decap-oauth-portfolio-gh.anniina-sipria.workers.dev
   auth_endpoint: auth
@@ -10,7 +10,7 @@ backend:
 site_url: https://anniina-photo.pages.dev
 display_url: https://anniina-photo.pages.dev
 
-media_folder: "public/images/uploads" # Kuvien sijainti GitHubissa (suhteessa git-juureen)
+media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
