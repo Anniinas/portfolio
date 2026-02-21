@@ -7,31 +7,22 @@
     <title>Anniinan portfolio</title>
     <link href="config.yml" type="text/yaml" rel="cms-config-url" />
     <script>
+        // OAuth Session Injection Fallback
         window.addEventListener("message", (event) => {
             if (typeof event.data === 'string' && event.data.startsWith('authorization:github:success:')) {
-                console.log('Admin: OAuth message received from', event.origin);
-
                 const jsonStr = event.data.replace('authorization:github:success:', '');
                 try {
                     const data = JSON.parse(jsonStr);
-                    console.log('Admin: Token length:', data.token ? data.token.length : '0');
-
-                    // Forced injection after 2 seconds
                     setTimeout(() => {
-                        console.log('Admin: Executing injection...');
                         const userData = {
                             backendName: 'github',
                             token: data.token,
                             use_workflow: true
                         };
                         localStorage.setItem('decap-cms-user', JSON.stringify(userData));
-                        console.log('Admin: localStorage updated. Forcing reload now.');
-                        // Force reload from server, ignoring cache
-                        window.location.href = window.location.pathname + '?t=' + Date.now();
-                    }, 2000);
-                } catch (e) {
-                    console.error('Admin: Injection error:', e);
-                }
+                        window.location.href = window.location.pathname + '?auth=success';
+                    }, 1000);
+                } catch (e) { }
             }
         }, false);
     </script>
