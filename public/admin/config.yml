@@ -1,8 +1,8 @@
-#local_backend: true # TÄMÄ VAATII: npx decap-server (aja toisessa terminaalissa)
+# local_backend: true # POISTA TÄMÄ KOMMENTTI LOKAALIA TESTAUSTA VARTEN (vaatii: npx decap-server)
 
 backend:
   name: github
-  repo: Anniinas/portfolio
+  repo: anniinas/portfolio
   branch: main
   base_url: https://decap-oauth-portfolio-gh.anniina-sipria.workers.dev
   auth_endpoint: auth
