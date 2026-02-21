@@ -2,6 +2,8 @@ backend:
   name: github
   repo: anniinas/portfolio
   branch: main
+  base_url: https://decap-oauth-portfolio-gh.anniina-sipria.workers.dev
+  auth_endpoint: auth
 
 media_folder: "public/images/uploads" # Kuvien sijainti
 public_folder: "/images/uploads"
