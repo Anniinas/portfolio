@@ -13,8 +13,18 @@
         // Diagnostic log
         console.log('Admin Page loaded');
         console.log('Current Hash:', window.location.hash);
+
+        // Listen for the OAuth message
+        window.addEventListener("message", (event) => {
+            console.log('Received message from:', event.origin);
+            console.log('Message data:', event.data);
+            if (typeof event.data === 'string' && event.data.startsWith('authorization:')) {
+                console.log('OAuth result received!');
+            }
+        }, false);
+
         if (window.location.hash) {
-            console.log('Authentication fragment detected');
+            console.log('Hash detected:', window.location.hash);
         }
     </script>
     <script src="https://unpkg.com/decap-cms@^3.10.0/dist/decap-cms.js"></script>
