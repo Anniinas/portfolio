@@ -7,44 +7,47 @@
     <title>Anniinan portfolio</title>
     <link href="config.yml" type="text/yaml" rel="cms-config-url" />
     <script>
-        console.log('Admin Page [HEAD]: Level 2 Diagnostics initialized');
+        console.log('Admin Page [DIAG]: Deep State Diagnostics v3 initialized');
 
-        // 1. Monitor Messages
+        // 1. Message Interceptor
         window.addEventListener("message", (event) => {
-            console.log('Admin Page [MSG]: Received from', event.origin);
-            if (typeof event.data === 'string' && event.data.startsWith('authorization:')) {
-                console.log('Admin Page [MSG]: OAuth message raw:', event.data);
+            const isOAuth = typeof event.data === 'string' && event.data.startsWith('authorization:');
+            console.log('Admin Page [MSG]: Origin:', event.origin, '| OAuth Message:', isOAuth);
+            if (isOAuth) {
+                console.log('Admin Page [MSG]: DATA RECEIVED (Length:', event.data.length, ')');
             }
         }, false);
 
-        // 2. Monitor Network (Fetch & XHR)
+        // 2. Fetch Interceptor (Network Spy)
         const originalFetch = window.fetch;
-        window.fetch = function () {
-            console.log('Admin Page [NETWORK]: Fetch called for:', arguments[0]);
-            return originalFetch.apply(this, arguments);
+        window.fetch = async (...args) => {
+            const url = args[0] instanceof URL ? args[0].href : args[0];
+            console.log('Admin Page [FETCH]:', url);
+            try {
+                const response = await originalFetch(...args);
+                console.log('Admin Page [FETCH-RES]:', url, 'Status:', response.status);
+                return response;
+            } catch (err) {
+                console.error('Admin Page [FETCH-ERR]:', url, err.message);
+                throw err;
+            }
         };
 
-        const originalOpen = XMLHttpRequest.prototype.open;
-        XMLHttpRequest.prototype.open = function (method, url) {
-            console.log('Admin Page [NETWORK]: XHR called for:', url);
-            return originalOpen.apply(this, arguments);
-        };
-
-        // 3. Monitor Errors
-        window.addEventListener('error', (e) => console.error('Admin Page [ERROR]:', e.error || e.message));
-        window.addEventListener('unhandledrejection', (e) => console.error('Admin Page [REJECT]:', e.reason));
+        // 3. Global State Monitor
+        setInterval(() => {
+            const state = localStorage.getItem('decap-cms-user');
+            if (state) {
+                console.log('Admin Page [STATE]: Session DETECTED in localStorage!');
+            }
+        }, 5000);
     </script>
 </head>
 
 <body>
     <script>
-        console.log('Admin Page [BODY]: Hash is', window.location.hash || '(empty)');
-        try {
-            const user = localStorage.getItem('decap-cms-user');
-            console.log('Admin Page [STORAGE]: decaps-cms-user:', user ? 'Persistent session found' : 'No session');
-        } catch (e) { }
+        console.log('Admin Page [INIT]: Page loaded at', new Date().toLocaleTimeString());
     </script>
-    <script src="https://unpkg.com/decap-cms@3.3.3/dist/decap-cms.js"></script>
+    <script src="https://unpkg.com/decap-cms@^3.10.0/dist/decap-cms.js"></script>
 </body>
 
 </html>

@@ -2,7 +2,7 @@
 
 backend:
   name: github
-  repo: Anniinas/portfolio
+  repo: anniinas/portfolio
   branch: main
   base_url: https://decap-oauth-portfolio-gh.anniina-sipria.workers.dev
   auth_endpoint: auth
