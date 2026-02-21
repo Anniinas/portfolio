@@ -9,7 +9,15 @@
 </head>
 
 <body>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script>
+        // Diagnostic log
+        console.log('Admin Page loaded');
+        console.log('Current Hash:', window.location.hash);
+        if (window.location.hash) {
+            console.log('Authentication fragment detected');
+        }
+    </script>
+    <script src="https://unpkg.com/decap-cms@^3.10.0/dist/decap-cms.js"></script>
 </body>
 
 </html>
