@@ -14,7 +14,7 @@ const posts = (await getCollection('blog')).sort(
 	<div class="posts-grid">
 		{posts.map((post) => (
 			<article class="post-card">
-				<a href={`/blog/${post.slug}`}>
+				<a href={`/blog/${post.id}`}>
 					{post.data.image && (
 						<div class="image-container">
 							<img src={post.data.image} alt={post.data.alt || post.data.title} loading="lazy" />
