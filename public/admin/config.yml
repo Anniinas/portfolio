@@ -1,0 +1,19 @@
+backend:
+  name: github
+  repo: anniinas/portfolio
+  branch: main
+
+media_folder: "public/images/uploads" # Kuvien sijainti
+public_folder: "/images/uploads"
+
+collections:
+  - name: "blog"
+    label: "Blogi"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Otsikko", name: "title", widget: "string"}
+      - {label: "Julkaisupäivä", name: "date", widget: "datetime"}
+      - {label: "Pääkuva", name: "image", widget: "image"}
+      - {label: "Teksti", name: "body", widget: "markdown"}
