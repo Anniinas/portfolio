@@ -5,6 +5,7 @@ backend:
   repo: anniinas/portfolio
   branch: main
   base_url: https://decap-oauth-portfolio-gh.anniina-sipria.workers.dev
+  auth_endpoint: auth
 
 site_url: https://anniina-photo.pages.dev
 display_url: https://anniina-photo.pages.dev
