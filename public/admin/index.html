@@ -7,28 +7,30 @@
     <title>Anniinan portfolio</title>
     <link href="config.yml" type="text/yaml" rel="cms-config-url" />
     <script>
-        // Emergency Fallback: If Decap CMS doesn't react to the message, we can help it
         window.addEventListener("message", (event) => {
             if (typeof event.data === 'string' && event.data.startsWith('authorization:github:success:')) {
-                console.log('Admin: OAuth message received. If the page doesn\'t refresh in 3 seconds, logging in manually...');
+                console.log('Admin: OAuth message received from', event.origin);
 
                 const jsonStr = event.data.replace('authorization:github:success:', '');
                 try {
                     const data = JSON.parse(jsonStr);
-                    // This is the fallback: it forces the session into localStorage if CMS fails
+                    console.log('Admin: Token length:', data.token ? data.token.length : '0');
+
+                    // Forced injection after 2 seconds
                     setTimeout(() => {
-                        if (!localStorage.getItem('decap-cms-user')) {
-                            console.log('Admin: Manual session injection triggered.');
-                            localStorage.setItem('decap-cms-user', JSON.stringify({
-                                name: 'Anniinas',
-                                token: data.token,
-                                provider: 'github'
-                            }));
-                            window.location.reload();
-                        }
-                    }, 3000);
+                        console.log('Admin: Executing injection...');
+                        const userData = {
+                            backendName: 'github',
+                            token: data.token,
+                            use_workflow: true
+                        };
+                        localStorage.setItem('decap-cms-user', JSON.stringify(userData));
+                        console.log('Admin: localStorage updated. Forcing reload now.');
+                        // Force reload from server, ignoring cache
+                        window.location.href = window.location.pathname + '?t=' + Date.now();
+                    }, 2000);
                 } catch (e) {
-                    console.error('Admin: Failed to parse OAuth data', e);
+                    console.error('Admin: Injection error:', e);
                 }
             }
         }, false);
