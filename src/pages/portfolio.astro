@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
-const photos = await getCollection('portfolio');
+const photos = (await getCollection('portfolio')).sort((a, b) => a.data.order - b.data.order);
 ---
 
 <Layout title="Portfolio | Valokuvausportfolio">
@@ -11,7 +11,7 @@ const photos = await getCollection('portfolio');
 
 	<div class="gallery-grid">
 		{photos.map((photo) => (
-			<div class="gallery-item">
+			<div class="gallery-item" data-full-image={photo.data.image}>
 				<img src={photo.data.image} alt={photo.data.title} loading="lazy" />
 				<div class="overlay">
 					<span>{photo.data.category}</span>
@@ -19,7 +19,52 @@ const photos = await getCollection('portfolio');
 			</div>
 		))}
 	</div>
+
+	<!-- Modal -->
+	<div id="image-modal" class="modal">
+		<span class="close">&times;</span>
+		<img class="modal-content" id="img01">
+		<div id="caption"></div>
+	</div>
 </Layout>
+
+<script>
+	const modal = document.getElementById("image-modal");
+	const modalImg = document.getElementById("img01");
+	const captionText = document.getElementById("caption");
+	const closeBtn = document.getElementsByClassName("close")[0];
+	const galleryItems = document.querySelectorAll('.gallery-item');
+
+	galleryItems.forEach(item => {
+		item.addEventListener('click', function() {
+			modal.style.display = "flex";
+			modalImg.src = this.dataset.fullImage;
+			const category = this.querySelector('.overlay span').textContent;
+			const altText = this.querySelector('img').alt;
+			captionText.innerHTML = `<strong>${altText}</strong><br>${category}`;
+			document.body.style.overflow = 'hidden'; // Prevent scrolling
+		});
+	});
+
+	function closeModal() {
+		modal.style.display = "none";
+		document.body.style.overflow = 'auto'; // Re-enable scrolling
+	}
+
+	closeBtn.onclick = closeModal;
+
+	window.onclick = function(event) {
+		if (event.target == modal) {
+			closeModal();
+		}
+	}
+
+	document.addEventListener('keydown', function(event) {
+		if (event.key === "Escape") {
+			closeModal();
+		}
+	});
+</script>
 
 <style>
 	h1 {
@@ -33,14 +78,33 @@ const photos = await getCollection('portfolio');
 	}
 
 	.gallery-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		gap: 1.5rem;
+		columns: 1;
+		column-gap: 1.5rem;
+		width: 100%;
+	}
+
+	@media (min-width: 640px) {
+		.gallery-grid {
+			columns: 2;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.gallery-grid {
+			columns: 3;
+		}
+	}
+
+	@media (min-width: 1280px) {
+		.gallery-grid {
+			columns: 4;
+		}
 	}
 
 	.gallery-item {
 		position: relative;
-		aspect-ratio: 1;
+		margin-bottom: 1.5rem;
+		break-inside: avoid;
 		overflow: hidden;
 		border-radius: 8px;
 		background: var(--secondary-color);
@@ -48,8 +112,8 @@ const photos = await getCollection('portfolio');
 
 	.gallery-item img {
 		width: 100%;
-		height: 100%;
-		object-fit: cover;
+		height: auto;
+		display: block;
 	}
 
 	.overlay {
@@ -67,10 +131,81 @@ const photos = await getCollection('portfolio');
 		opacity: 1;
 	}
 
+	.gallery-item {
+		cursor: pointer;
+	}
+
 	.overlay span {
 		font-family: 'Outfit', sans-serif;
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
+		color: white;
+	}
+
+	/* Modal Styles */
+	.modal {
+		display: none;
+		position: fixed;
+		z-index: 1000;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0,0,0,0.9);
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		backdrop-filter: blur(5px);
+		padding: 2rem;
+		cursor: zoom-out;
+	}
+
+	.modal-content {
+		max-width: 90%;
+		max-height: 80vh;
+		object-fit: contain;
+		border-radius: 4px;
+		animation: zoom 0.3s ease-out;
+	}
+
+	@keyframes zoom {
+		from {transform:scale(0.9); opacity: 0;}
+		to {transform:scale(1); opacity: 1;}
+	}
+
+	#caption {
+		margin-top: 1rem;
+		text-align: center;
+		color: white;
+		font-family: 'Outfit', sans-serif;
+	}
+
+	.close {
+		position: absolute;
+		top: 2rem;
+		right: 2rem;
+		color: #f1f1f1;
+		font-size: 3rem;
+		font-weight: bold;
+		transition: 0.3s;
+		cursor: pointer;
+		line-height: 1;
+	}
+
+	.close:hover,
+	.close:focus {
+		color: var(--accent-color, #bbb);
+		text-decoration: none;
+	}
+
+	@media (max-width: 700px) {
+		.modal-content {
+			width: 100%;
+		}
+		.close {
+			top: 1rem;
+			right: 1.5rem;
+		}
 	}
 </style>

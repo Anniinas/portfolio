@@ -1,0 +1,214 @@
+---
+interface Props {
+	postId: string;
+	instance?: string;
+}
+
+const { postId, instance = 'mastodon.social' } = Astro.props;
+---
+
+<div id="mastodon-comments-container" data-post-id={postId} data-instance={instance}>
+	<div class="comments-header">
+		<h3>Kommentit</h3>
+		<p class="comments-info">Vastaa tähän <a href={`https://${instance}/@${postId}`} id="mastodon-thread-link" target="_blank" rel="noopener noreferrer">Mastodon-viestiin</a> osallistuaksesi keskusteluun.</p>
+	</div>
+	
+	<div id="mastodon-comments-list">
+		<div class="loading">Ladataan kommentteja...</div>
+	</div>
+</div>
+
+<script>
+	const container = document.getElementById('mastodon-comments-container');
+	const postId = container?.dataset.postId;
+	const instance = container?.dataset.instance;
+	const commentsList = document.getElementById('mastodon-comments-list');
+	const threadLink = document.getElementById('mastodon-thread-link') as HTMLAnchorElement;
+
+	if (postId && instance && commentsList) {
+		// Jos postId on URL, erotetaan ID siitä
+		const id = postId.split('/').pop();
+		
+		if (threadLink && !postId.startsWith('http')) {
+			threadLink.href = `https://${instance}/@anniina_sipria/${id}`;
+		} else if (threadLink && postId.startsWith('http')) {
+			threadLink.href = postId;
+		}
+
+		fetchComments(instance, id!);
+	}
+
+	async function fetchComments(instance: string, id: string) {
+		try {
+			const response = await fetch(`https://${instance}/api/v1/statuses/${id}/context`);
+			const data = await response.json();
+
+			if (data.descendants && data.descendants.length > 0) {
+				renderComments(data.descendants);
+			} else {
+				commentsList!.innerHTML = '<p class="no-comments">Ei vielä kommentteja. Ole ensimmäinen!</p>';
+			}
+		} catch (error) {
+			console.error('Error fetching Mastodon comments:', error);
+			commentsList!.innerHTML = '<p class="error">Kommenttien lataaminen epäonnistui.</p>';
+		}
+	}
+
+	function renderComments(comments: any[]) {
+		commentsList!.innerHTML = '';
+		
+		comments.forEach(comment => {
+			const article = document.createElement('article');
+			article.className = 'comment';
+			
+			const date = new Date(comment.created_at).toLocaleDateString('fi-FI', {
+				year: 'numeric',
+				month: 'long',
+				day: 'numeric',
+				hour: '2-digit',
+				minute: '2-digit'
+			});
+
+			article.innerHTML = `
+				<div class="comment-header">
+					<img src="${comment.account.avatar}" alt="${comment.account.display_name}" class="avatar" />
+					<div class="author-info">
+						<span class="display-name">${comment.account.display_name || comment.account.username}</span>
+						<a href="${comment.account.url}" target="_blank" class="username">@${comment.account.acct}</a>
+					</div>
+					<time class="comment-date">${date}</time>
+				</div>
+				<div class="comment-content">
+					${comment.content}
+				</div>
+				<div class="comment-footer">
+					<a href="${comment.url}" target="_blank" class="view-link">Näytä Mastodonissa</a>
+				</div>
+			`;
+			
+			commentsList!.appendChild(article);
+		});
+	}
+</script>
+
+<style>
+	#mastodon-comments-container {
+		margin-top: 4rem;
+		padding-top: 2rem;
+		border-top: 1px solid var(--secondary-color);
+	}
+
+	.comments-header {
+		margin-bottom: 2rem;
+	}
+
+	.comments-header h3 {
+		font-size: 1.5rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.comments-info {
+		color: var(--muted-color);
+		font-size: 0.9rem;
+	}
+
+	.comments-info a {
+		color: var(--accent-color);
+		text-decoration: underline;
+	}
+
+	#mastodon-comments-list {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.comment {
+		background: rgba(255, 255, 255, 0.03);
+		padding: 1.5rem;
+		border-radius: 12px;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+	}
+
+	.comment-header {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.avatar {
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		border: 1px solid var(--secondary-color);
+	}
+
+	.author-info {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.display-name {
+		font-weight: 600;
+		color: var(--text-color);
+	}
+
+	.username {
+		font-size: 0.8rem;
+		color: var(--muted-color);
+	}
+
+	.comment-date {
+		margin-left: auto;
+		font-size: 0.8rem;
+		color: var(--muted-color);
+	}
+
+	.comment-content {
+		line-height: 1.6;
+		color: #ccc;
+		font-size: 1rem;
+	}
+
+	.comment-content :global(p) {
+		margin-bottom: 1rem;
+	}
+
+	.comment-content :global(p:last-child) {
+		margin-bottom: 0;
+	}
+
+	.comment-content :global(a) {
+		color: var(--accent-color);
+	}
+
+	.comment-footer {
+		margin-top: 1rem;
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	.view-link {
+		font-size: 0.8rem;
+		color: var(--muted-color);
+		text-decoration: none;
+		transition: color 0.2s;
+	}
+
+	.view-link:hover {
+		color: var(--accent-color);
+	}
+
+	.loading, .no-comments, .error {
+		text-align: center;
+		color: var(--muted-color);
+		padding: 2rem;
+		background: rgba(255, 255, 255, 0.02);
+		border-radius: 8px;
+	}
+
+	.error {
+		color: #ff4d4d;
+	}
+</style>

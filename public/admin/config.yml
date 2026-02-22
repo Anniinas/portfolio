@@ -23,6 +23,7 @@ collections:
       - {label: "Otsikko", name: "title", widget: "string"}
       - {label: "Julkaisupäivä", name: "date", widget: "datetime"}
       - {label: "Pääkuva", name: "image", widget: "image"}
+      - {label: "Mastodonviestin ID", name: "mastodon_post_id", widget: "string", required: false, hint: "Esimerkiksi: 11234567890 tai linkki postaukseen. Käytetään kommenttien hakemiseen."}
       - {label: "Teksti", name: "body", widget: "markdown"}
 
   - name: "events"

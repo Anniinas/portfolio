@@ -2,6 +2,7 @@
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import MastodonShare from '../../components/MastodonShare.astro';
+import MastodonComments from '../../components/MastodonComments.astro';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
@@ -62,6 +63,8 @@ const { Content } = await render(post);
 					</a>
 				</div>
 			</div>
+
+			{post.data.mastodon_post_id && <MastodonComments postId={post.data.mastodon_post_id} />}
 			
 			<div class="back-link">
 				<a href="/blog">&larr; Takaisin blogiin</a>

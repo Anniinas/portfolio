@@ -9,6 +9,7 @@ const blog = defineCollection({
         date: z.coerce.date(),
         image: z.string().optional(),
         alt: z.string().optional(),
+        mastodon_post_id: z.string().optional(),
     }),
 });
 
@@ -28,6 +29,7 @@ const portfolio = defineCollection({
         title: z.string(),
         image: z.string(),
         category: z.string(),
+        order: z.number().default(0),
     }),
 });
 
