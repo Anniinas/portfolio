@@ -61,15 +61,17 @@ const { title } = Astro.props;
 					<span></span>
 					<span></span>
 				</button>
-				<ul class="nav-links">
-					<li><a href="/mina">Minä</a></li>
-					<li><a href="/portfolio">Portfolio</a></li>
-					<li><a href="/calendar">Kalenteri</a></li>
-					<li><a href="/blog">Blogi</a></li>
-					<li><a href="/contact">Yhteystiedot</a></li>
-				</ul>
 			</nav>
 		</header>
+		<ul class="nav-links">
+			<button class="nav-close" aria-label="Sulje valikko">&times;</button>
+			<li><a href="/mina">Minä</a></li>
+			<li><a href="/portfolio">Portfolio</a></li>
+			<li><a href="/calendar">Kalenteri</a></li>
+			<li><a href="/hinnasto">Hinnasto</a></li>
+			<li><a href="/blog">Blogi</a></li>
+			<li><a href="/contact">Yhteystiedot</a></li>
+		</ul>
 		<main>
 			<slot />
 		</main>
@@ -80,6 +82,13 @@ const { title } = Astro.props;
 		<script>
 			const menuToggle = document.querySelector('.mobile-menu-toggle');
 			const navLinks = document.querySelector('.nav-links');
+			const navClose = document.querySelector('.nav-close');
+
+			function closeMenu() {
+				menuToggle.classList.remove('active');
+				navLinks.classList.remove('active');
+				document.body.classList.remove('menu-open');
+			}
 
 			if (menuToggle && navLinks) {
 				menuToggle.addEventListener('click', () => {
@@ -88,13 +97,11 @@ const { title } = Astro.props;
 					document.body.classList.toggle('menu-open');
 				});
 
+				if (navClose) navClose.addEventListener('click', closeMenu);
+
 				// Close menu when clicking a link
 				navLinks.querySelectorAll('a').forEach(link => {
-					link.addEventListener('click', () => {
-						menuToggle.classList.remove('active');
-						navLinks.classList.remove('active');
-						document.body.classList.remove('menu-open');
-					});
+					link.addEventListener('click', closeMenu);
 				});
 			}
 		</script>
@@ -235,6 +242,15 @@ const { title } = Astro.props;
 		display: flex;
 		gap: 2rem;
 		align-items: center;
+		/* Desktop: fixed to top-right, aligned with nav max-width */
+		position: fixed;
+		top: 0;
+		right: max(1rem, calc((100vw - 1000px) / 2));
+		padding: 2rem 0;
+		height: auto;
+		width: auto;
+		background: transparent;
+		z-index: 101;
 	}
 
 	.mobile-menu-toggle {
@@ -302,6 +318,25 @@ const { title } = Astro.props;
 		transform: scale(1.02);
 	}
 
+	.nav-close {
+		display: none;
+		position: absolute;
+		top: 1.5rem;
+		right: 1.5rem;
+		background: transparent;
+		border: none;
+		color: var(--text-color);
+		font-size: 2.5rem;
+		line-height: 1;
+		cursor: pointer;
+		padding: 0.25rem 0.5rem;
+		transition: opacity 0.2s ease;
+	}
+
+	.nav-close:hover {
+		opacity: 0.7;
+	}
+
 	@media (max-width: 860px) {
 		header {
 			padding: 1rem;
@@ -309,6 +344,10 @@ const { title } = Astro.props;
 
 		.mobile-menu-toggle {
 			display: flex;
+		}
+
+		.nav-close {
+			display: block;
 		}
 
 		.nav-links {
@@ -324,7 +363,7 @@ const { title } = Astro.props;
 			gap: 2.5rem;
 			clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
 			transition: clip-path 0.3s ease, visibility 0.3s ease;
-			z-index: 100;
+			z-index: 9999;
 			visibility: hidden;
 		}
 

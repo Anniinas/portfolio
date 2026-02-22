@@ -1,0 +1,402 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Hinnasto | Anniina Photo">
+	<section class="hinnasto-container">
+		<h1>Hinnasto</h1>
+		<p class="intro">
+			Kaikki kuvaukset ovat yksilöllisiä ja hinta sovitaan aina tapauskohtaisesti.
+			Alla esimerkkihinnat yleisimmistä kuvauksista. Kysy rohkeasti tarjousta!
+		</p>
+
+		<div class="price-grid">
+
+			<div class="price-card featured">
+				<div class="card-header">
+					<div class="category-icon">🏆</div>
+					<h2>Kilpailukuvaus</h2>
+					<p class="category-desc">Kouluratsastus, esteratsastus, agility ja muut kilpailut</p>
+				</div>
+				<div class="card-body">
+					<div class="price-item">
+						<span class="price-label">1 eläin</span>
+						<span class="price-value">115 €</span>
+					</div>
+					<div class="price-item">
+						<span class="price-label">Seuraava eläin</span>
+						<span class="price-value">+ 15 €</span>
+					</div>
+					<ul class="price-includes">
+						<li>Parhaat kuvat galleriaan</li>
+						<li>Online-galleria jakamista varten</li>
+						<li>Kuvat toimitetaan 1–2 viikon kuluessa</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="price-card">
+				<div class="card-header">
+					<div class="category-icon">🎀</div>
+					<h2>Näyttelykuvaus</h2>
+					<p class="category-desc">Hevosnäyttelyt, koiranäyttelyt ja muut showtapahtumat</p>
+				</div>
+				<div class="card-body">
+					<div class="price-item">
+						<span class="price-label">1 eläin</span>
+						<span class="price-value">125 €</span>
+					</div>
+					<div class="price-item">
+						<span class="price-label">Seuraava eläin</span>
+						<span class="price-value">+ 20 €</span>
+					</div>
+					<ul class="price-includes">
+						<li>Parhaat kuvat galleriaan</li>
+						<li>Online-galleria jakamista varten</li>
+						<li>Kuvat toimitetaan 1–2 viikon kuluessa</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="price-card">
+				<div class="card-header">
+					<div class="category-icon">✨</div>
+					<h2>Räätälöity paketti</h2>
+					<p class="category-desc">Suunniteltu juuri sinun tarpeisiisi</p>
+				</div>
+				<div class="card-body">
+					<div class="price-item">
+						<span class="price-label">Hinta</span>
+						<span class="price-value">sovitaan erikseen</span>
+					</div>
+					<ul class="price-includes">
+						<li>Kuvauksen kesto ja sisältö sovitaan yhdessä</li>
+						<li>Sopii esim. tallikuvaukseen, muotokuviin tai erityistapahtumiin</li>
+						<li>Kysy rohkeasti tarjousta!</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="extra-info">
+			<h3>Lisätietoa</h3>
+			<div class="info-grid">
+				<div class="info-item">
+					<strong>Matkakustannukset</strong>
+					<span>Helsingin alueella matkakulut sisältyvät hintaan. Kauemmaksi sovitaan matkakustannuksista erikseen.</span>
+				</div>
+				<div class="info-item">
+					<strong>Kuvien valinta</strong>
+					<span>Tapahtumasta valitaan parhaat kuvat (5-10kpl) ja ne ladataan galleriaan esille. Asiakas ostaa galleriasta haluamansa kuvat.</span>
+				</div>
+				<div class="info-item">
+					<strong>Tilaus ja peruutus</strong>
+					<span>Tilaus vahvistetaan varausmaksulla sekä kuvaussopimuksen hyväksymisellä. Peruutuksista sovitaan tapauskohtaisesti.</span>
+				</div>
+				<div class="info-item">
+					<strong>Arvonlisävero</strong>
+					<span>Hinnat ovat alv. 0%, sillä yrittäjä ei ole alv-velvollinen.</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="kuvat-info">
+			<h3>Kuvagalleria ja kuvien osto</h3>
+			<ul class="kuvat-list">
+				<li>
+					<span class="kuvat-icon">🎨</span>
+					<span>Galleriakuvat on <strong>kevyesti käsitelty</strong> – värit tasapainotettu, horisontti suoristettu ja mahdollisesti uudelleen rajattuja.</span>
+				</li>
+				<li>
+					<span class="kuvat-icon">📏</span>
+					<span>Kuvien koko on <strong>2048 px pidimmältä sivulta</strong> – soveltuu somekäyttöön erinomaisesti.</span>
+				</li>
+				<li>
+					<span class="kuvat-icon">©️</span>
+					<span>Kuvien <strong>lisenssi on somekäyttöön</strong> – kuvia saa käyttää omalla nettisivulla, sekä esim: Facebookissa ja Instagramissa.</span>
+				</li>
+				<li>
+					<span class="kuvat-icon">💳</span>
+					<span>Yksittäiset kuvat ostetaan galleriasta hintaan <strong>10 € / kuva</strong>.</span>
+				</li>
+			</ul>
+		</div>
+
+		<div class="cta">
+			<p>Etkö löydä sopivaa vaihtoehtoa? Kysy rohkeasti lisää!</p>
+			<a href="/contact" class="cta-button">Ota yhteyttä</a>
+		</div>
+
+	</section>
+</Layout>
+
+<style>
+	/* Kuvat info box */
+	.kuvat-info {
+		background: rgba(84, 51, 168, 0.08);
+		border: 1px solid rgba(84, 51, 168, 0.3);
+		border-radius: 16px;
+		padding: 2.5rem;
+		margin-bottom: 2rem;
+	}
+
+	.kuvat-info h3 {
+		font-size: 1.6rem;
+		margin: 0 0 1.5rem;
+	}
+
+	.kuvat-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.kuvat-list li {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.8rem;
+		font-size: 0.95rem;
+		line-height: 1.6;
+		color: var(--muted-color);
+	}
+
+	.kuvat-list li strong {
+		color: var(--text-color);
+	}
+
+	.kuvat-icon {
+		font-size: 1.1rem;
+		flex-shrink: 0;
+		margin-top: 0.1rem;
+	}
+
+	.hinnasto-container {
+		padding: 3rem 0;
+	}
+
+	h1 {
+		font-size: 3rem;
+		margin-bottom: 1rem;
+	}
+
+	.intro {
+		color: var(--muted-color);
+		max-width: 620px;
+		margin-bottom: 4rem;
+		font-size: 1.1rem;
+		line-height: 1.6;
+	}
+
+	.price-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.5rem;
+		margin-bottom: 4rem;
+	}
+
+	@media (max-width: 900px) {
+		.price-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.price-card {
+		background: rgba(26, 26, 26, 0.4);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 16px;
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+		overflow: hidden;
+		transition: transform 0.3s ease, border-color 0.3s ease;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.price-card:hover {
+		transform: translateY(-4px);
+		border-color: rgba(243, 156, 18, 0.3);
+	}
+
+	.price-card.featured {
+		border-color: rgba(243, 156, 18, 0.4);
+		background: rgba(243, 156, 18, 0.05);
+		position: relative;
+	}
+
+	.price-card.featured::before {
+		content: "Suosittu";
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		background: var(--accent-color);
+		color: #000;
+		font-size: 0.7rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		padding: 0.25rem 0.6rem;
+		border-radius: 20px;
+	}
+
+	.card-header {
+		padding: 2rem 2rem 1.5rem;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.category-icon {
+		font-size: 2rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.card-header h2 {
+		font-size: 1.6rem;
+		margin: 0 0 0.4rem;
+	}
+
+	.category-desc {
+		color: var(--muted-color);
+		font-size: 0.9rem;
+		margin: 0;
+	}
+
+	.card-body {
+		padding: 1.5rem 2rem 2rem;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 0;
+	}
+
+	.price-item {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		padding: 0.75rem 0;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+		gap: 1rem;
+	}
+
+	.price-item:last-of-type {
+		border-bottom: none;
+	}
+
+	.price-label {
+		color: var(--muted-color);
+		font-size: 0.95rem;
+	}
+
+	.price-value {
+		font-weight: 700;
+		font-size: 1rem;
+		color: var(--accent-color);
+		white-space: nowrap;
+	}
+
+	.price-includes {
+		margin: 1.5rem 0 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.price-includes li {
+		font-size: 0.88rem;
+		color: var(--muted-color);
+		padding-left: 1.2rem;
+		position: relative;
+	}
+
+	.price-includes li::before {
+		content: "✓";
+		position: absolute;
+		left: 0;
+		color: var(--accent-color);
+	}
+
+	/* Extra info */
+	.extra-info {
+		background: rgba(26, 26, 26, 0.3);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 16px;
+		padding: 2.5rem;
+		margin-bottom: 4rem;
+	}
+
+	.extra-info h3 {
+		font-size: 1.6rem;
+		margin: 0 0 2rem;
+	}
+
+	.info-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 2rem;
+	}
+
+	@media (max-width: 768px) {
+		.info-grid {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+	}
+
+	.info-item {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.info-item strong {
+		font-size: 0.85rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--text-color);
+	}
+
+	.info-item span {
+		color: var(--muted-color);
+		font-size: 0.9rem;
+		line-height: 1.6;
+	}
+
+	/* CTA */
+	.cta {
+		text-align: center;
+		padding: 3rem;
+		background: rgba(243, 156, 18, 0.05);
+		border: 1px solid rgba(243, 156, 18, 0.2);
+		border-radius: 16px;
+	}
+
+	.cta p {
+		color: var(--muted-color);
+		font-size: 1.1rem;
+		margin: 0 0 1.5rem;
+	}
+
+	.cta-button {
+		display: inline-block;
+		background: #fff;
+		color: #000;
+		padding: 1rem 2.5rem;
+		border-radius: 50px;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		font-size: 0.9rem;
+		transition: all 0.3s ease;
+		box-shadow: 0 0 20px rgba(255, 140, 0, 0.2);
+	}
+
+	.cta-button:hover {
+		transform: translateY(-2px);
+		opacity: 0.9;
+		box-shadow: 0 0 30px rgba(255, 140, 0, 0.35);
+	}
+</style>
