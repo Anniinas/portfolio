@@ -22,4 +22,13 @@ const events = defineCollection({
     }),
 });
 
-export const collections = { blog, events };
+const portfolio = defineCollection({
+    loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/portfolio" }),
+    schema: z.object({
+        title: z.string(),
+        image: z.string(),
+        category: z.string(),
+    }),
+});
+
+export const collections = { blog, events, portfolio };

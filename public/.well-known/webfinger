@@ -1,5 +1,5 @@
 {
-    "subject": "acct:nimi@domain.fi",
+    "subject": "acct:anniina@anniina-photo.pages.dev",
     "links": [
         {
             "rel": "http://webfinger.net/rel/profile-page",
@@ -10,6 +10,11 @@
             "rel": "self",
             "type": "application/activity+json",
             "href": "https://mastodon.social/users/anniina_sipria"
+        },
+        {
+            "rel": "http://webfinger.net/rel/avatar",
+            "type": "image/jpeg",
+            "href": "https://anniina-photo.pages.dev/images/profile.jpg"
         }
     ]
 }

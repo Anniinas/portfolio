@@ -1,25 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
-// In a real scenario, these would come from a content collection or directly from the file system
-const photos = [
-	{ src: '/images/uploads/default-blog.jpg', alt: 'Maisema 1', category: 'Maisema' },
-	{ src: '/images/uploads/default-blog.jpg', alt: 'Muotokuva 1', category: 'Muotokuva' },
-	{ src: '/images/uploads/default-blog.jpg', alt: 'Katu 1', category: 'Katukuvaus' },
-	{ src: '/images/uploads/default-blog.jpg', alt: 'Maisema 2', category: 'Maisema' },
-];
+const photos = await getCollection('portfolio');
 ---
 
-<Layout title="Galleria | Valokuvausportfolio">
-	<h1>Galleria</h1>
+<Layout title="Portfolio | Valokuvausportfolio">
+	<h1>Portfolio</h1>
 	<p class="subtitle">Valikoituja otoksia eri genreistä.</p>
 
 	<div class="gallery-grid">
 		{photos.map((photo) => (
 			<div class="gallery-item">
-				<img src={photo.src} alt={photo.alt} loading="lazy" />
+				<img src={photo.data.image} alt={photo.data.title} loading="lazy" />
 				<div class="overlay">
-					<span>{photo.category}</span>
+					<span>{photo.data.category}</span>
 				</div>
 			</div>
 		))}
