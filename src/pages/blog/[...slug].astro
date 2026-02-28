@@ -17,7 +17,11 @@ const post = Astro.props;
 const { Content } = await render(post);
 ---
 
-<Layout title={`${post.data.title} | Blogi`}>
+<Layout 
+	title={`${post.data.title} | Blogi`}
+	description={post.data.description}
+	image={post.data.image}
+>
 	<article class="blog-post">
 		{post.data.image && (
 			<img src={post.data.image} alt={post.data.alt || post.data.title} class="hero-image" />
